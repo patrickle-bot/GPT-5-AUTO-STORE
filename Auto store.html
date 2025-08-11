@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pharit Auto Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* ปรับสกอลล์บาร์ให้นุ่มนวลเล็กน้อย */
+    html{scroll-behavior:smooth}
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <!-- NAV -->
+  <header class="bg-white/80 backdrop-blur sticky top-0 z-30 border-b">
+    <div class="max-w-7xl mx-auto py-4 px-4 flex flex-wrap gap-3 items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-blue-600/10 flex items-center justify-center">
+          <span class="text-blue-600 font-black">PA</span>
+        </div>
+        <h1 class="text-2xl font-bold text-blue-700">Pharit Auto Store</h1>
+      </div>
+      <nav class="flex items-center gap-5 text-sm">
+        <a href="#home" class="hover:text-blue-600">หน้าแรก</a>
+        <a href="#categories" class="hover:text-blue-600">หมวดหมู่</a>
+        <a href="#news" class="hover:text-blue-600">ข่าวสาร</a>
+        <a href="#contact" class="hover:text-blue-600">ติดต่อเรา</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home" class="max-w-7xl mx-auto p-6">
+    <!-- HERO -->
+    <section class="rounded-3xl p-10 md:p-14 bg-gradient-to-br from-blue-50 to-sky-100 border shadow-sm mb-10">
+      <div class="max-w-3xl">
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900">แต่งรถให้โดนใจในที่เดียว</h2>
+        <p class="mt-4 text-slate-600 text-lg">สปอยเลอร์ • ดิฟฟิวเซอร์ • ท่อ • เครื่องยนต์ • เทอร์โบ • ช่วงล่าง • ล้อ/เบรก • ไฟ/แสงสว่าง • ภายใน และอีกมากมาย</p>
+        <div class="mt-6 flex gap-3">
+          <a href="#categories" class="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700">เลือกดูหมวดหมู่</a>
+          <a href="#news" class="px-6 py-3 rounded-xl bg-white border font-semibold hover:bg-slate-50">อ่านข่าวรถล่าสุด</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTROLS -->
+    <section class="mb-8 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+      <div class="flex items-center gap-2">
+        <input id="search" type="search" placeholder="ค้นหาหมวดหมู่ / สินค้า..." class="w-full md:w-96 p-3 rounded-xl border bg-white outline-none focus:ring-2 focus:ring-blue-500" />
+        <button id="btnClearSearch" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-sm">ล้าง</button>
+      </div>
+      <div class="flex items-center gap-3 text-sm">
+        <label class="inline-flex items-center gap-2"><input id="editToggle" type="checkbox" class="accent-blue-600"> โหมดแก้ไขหน้าปก</label>
+        <button id="resetCovers" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300">รีเซ็ตหน้าปก</button>
+      </div>
+    </section>
+
+    <!-- CATEGORIES GRID -->
+    <section id="categories" class="mb-12">
+      <h3 class="text-2xl font-bold mb-4">หมวดหมู่สินค้า</h3>
+      <p class="text-slate-600 mb-6 text-sm">เคล็ดลับ: เปิด <b>โหมดแก้ไขหน้าปก</b> แล้วคลิกปุ่ม “อัปโหลดรูป” บนการ์ด เพื่อใส่รูปของคุณเอง (บันทึกลงในเบราว์เซอร์เครื่องนี้อัตโนมัติ)</p>
+      <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- การ์ดจะถูกใส่โดยสคริปต์จากรายการ categories ด้านล่าง -->
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section id="news" class="mb-12">
+      <div class="flex items-end justify-between mb-4">
+        <h3 class="text-2xl font-bold">ข่าวสารเกี่ยวกับรถ</h3>
+        <div class="text-sm text-slate-500">เพิ่มข่าวเองได้: เปิดโหมดแก้ไข แล้วคลิก “+ เพิ่มข่าว”</div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="newsGrid"></div>
+      <div class="mt-4">
+        <button id="addNews" class="hidden px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700">+ เพิ่มข่าว</button>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="mb-14">
+      <h3 class="text-2xl font-bold mb-4">ติดต่อเรา</h3>
+      <div class="bg-white rounded-2xl border shadow-sm p-6 grid md:grid-cols-2 gap-6">
+        <form class="space-y-3">
+          <input type="text" placeholder="ชื่อของคุณ" class="w-full p-3 border rounded-xl">
+          <input type="email" placeholder="อีเมล" class="w-full p-3 border rounded-xl">
+          <textarea placeholder="ข้อความ" class="w-full p-3 border rounded-xl h-32"></textarea>
+          <button type="button" class="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700">ส่งข้อความ</button>
+        </form>
+        <div class="text-sm text-slate-600">
+          <p class="mb-2">เวลาทำการ: จันทร์–เสาร์ 10:00–19:00 น.</p>
+          <p class="mb-2">อีเมล: support@pharit-auto.store</p>
+          <p>โทร: 0x-xxx-xxxx</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-white border-t">
+    <div class="max-w-7xl mx-auto py-6 px-4 text-center text-sm text-slate-500">© 2025 Pharit Auto Store — แต่งรถให้เข้าทางคุณ</div>
+  </footer>
+
+  <!-- TEMPLATES (rendered by JS) -->
+  <template id="cardTpl">
+    <article class="group bg-white rounded-2xl border shadow-sm overflow-hidden hover:shadow-md transition relative">
+      <div class="relative">
+        <img class="cover w-full h-48 object-cover" alt="cover" />
+        <button class="btnUpload absolute bottom-3 right-3 hidden group-[.editing]:inline-flex px-3 py-2 text-xs rounded-lg bg-white/90 backdrop-blur border hover:bg-white">อัปโหลดรูป</button>
+        <input type="file" accept="image/*" class="fileInput hidden" />
+      </div>
+      <div class="p-4">
+        <div class="flex items-center justify-between">
+          <h4 class="title font-bold text-lg"></h4>
+          <span class="badge text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-700"></span>
+        </div>
+        <p class="desc text-sm text-slate-600 mt-1"></p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <a class="px-3 py-2 text-sm rounded-xl border hover:bg-slate-50" href="#">ดูสินค้า</a>
+          <a class="px-3 py-2 text-sm rounded-xl border hover:bg-slate-50" href="#">รายละเอียด</a>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <template id="newsTpl">
+    <article class="group bg-white rounded-2xl border shadow-sm overflow-hidden hover:shadow-md transition">
+      <div class="relative">
+        <img class="newsCover w-full h-44 object-cover" alt="news cover" />
+        <button class="btnNewsUpload absolute bottom-3 right-3 hidden group-[.editing]:inline-flex px-3 py-2 text-xs rounded-lg bg-white/90 backdrop-blur border hover:bg-white">อัปโหลดรูป</button>
+        <input type="file" accept="image/*" class="newsFile hidden" />
+      </div>
+      <div class="p-4">
+        <h4 class="newsTitle font-bold text-lg"></h4>
+        <p class="newsBody text-sm text-slate-600 mt-1"></p>
+        <div class="mt-3 text-xs text-slate-500"></div>
+      </div>
+    </article>
+  </template>
+
+  <script>
+    // ====== DATA ======
+    const categories = [
+      { id:'spoiler', title:'สปอยเลอร์', desc:'เพิ่มความสปอร์ตและแรงกด', badge:'แอโรพาร์ต', cover:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop' },
+      { id:'diffuser', title:'ดิฟฟิวเซอร์', desc:'จัดการอากาศ ลดแรงต้าน', badge:'แอโรพาร์ต', cover:'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1200&auto=format&fit=crop' },
+      { id:'exhaust', title:'ท่อไอเสีย', desc:'เสียงหล่อ ไหลลื่น', badge:'Performance', cover:'https://images.unsplash.com/photo-1626497764743-2d0d9ed06f8a?q=80&w=1200&auto=format&fit=crop' },
+      { id:'engine', title:'เครื่องยนต์', desc:'พาร์ตเสริมพลัง', badge:'Performance', cover:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop' },
+      { id:'turbo', title:'เทอร์โบ', desc:'อัดบูสต์ เร่งทันใจ', badge:'Performance', cover:'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop' },
+      { id:'suspension', title:'ช่วงล่าง', desc:'สปริง โช้ก ปรับองศา', badge:'Handling', cover:'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1200&auto=format&fit=crop' },
+      { id:'wheels', title:'ล้อแม็ก', desc:'สวย เบา แข็งแรง', badge:'ล้อ/ยาง', cover:'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop' },
+      { id:'brakes', title:'เบรก', desc:'คาลิเปอร์/จาน/ผ้าเบรก', badge:'ความปลอดภัย', cover:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop' },
+      { id:'lighting', title:'ไฟ&แสงสว่าง', desc:'ไฟหน้า LED/Xenon, Daylight', badge:'ภายนอก', cover:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop' },
+      { id:'interior', title:'ภายใน', desc:'พวงมาลัย เบาะ ชุดคอนโซล', badge:'ตกแต่ง', cover:'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1200&auto=format&fit=crop' },
+    ];
+
+    const news = [
+      { id:'n1', title:'สปอร์ตคาร์รุ่นใหม่ปี 2025 เปิดตัวอย่างเป็นทางการ', body:'ดีไซน์ใหม่ เครื่องยนต์ไฮเทค น้ำหนักเบา พร้อมเทคโนโลยีช่วยขับขี่ครบ.', cover:'https://images.unsplash.com/photo-1511300636408-a63a89df3482?q=80&w=1200&auto=format&fit=crop', meta:'อัปเดตล่าสุด' },
+      { id:'n2', title:'คู่มือดูแลเทอร์โบให้อึดและเสถียร', body:'สรุปเทคนิคการอุ่นเครื่อง การดับ ร่วมถึงการเลือกน้ำมันและการบำรุงรักษา.', cover:'https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1200&auto=format&fit=crop', meta:'เคล็ดลับเวิร์กช็อป' },
+    ];
+
+    // ====== HELPERS ======
+    const $ = (sel, el=document) => el.querySelector(sel);
+    function makeCard(c){
+      const tpl = $('#cardTpl').content.cloneNode(true);
+      const el = tpl.querySelector('article');
+      el.dataset.id = c.id;
+      tpl.querySelector('.cover').src = loadCover(c.id) || c.cover;
+      tpl.querySelector('.title').textContent = c.title;
+      tpl.querySelector('.desc').textContent = c.desc;
+      tpl.querySelector('.badge').textContent = c.badge;
+
+      const btn = tpl.querySelector('.btnUpload');
+      const file = tpl.querySelector('.fileInput');
+      btn.addEventListener('click', ()=> file.click());
+      file.addEventListener('change', (e)=> handleImageSelect(e, c.id, el.querySelector('.cover')));
+      return el;
+    }
+
+    function makeNews(n){
+      const tpl = $('#newsTpl').content.cloneNode(true);
+      const el = tpl.querySelector('article');
+      el.dataset.id = n.id;
+      tpl.querySelector('.newsCover').src = loadCover('news-'+n.id) || n.cover;
+      tpl.querySelector('.newsTitle').textContent = n.title;
+      tpl.querySelector('.newsBody').textContent = n.body;
+      tpl.querySelector('.text-xs').textContent = n.meta || '';
+
+      const btn = tpl.querySelector('.btnNewsUpload');
+      const file = tpl.querySelector('.newsFile');
+      btn.addEventListener('click', ()=> file.click());
+      file.addEventListener('change', (e)=> handleImageSelect(e, 'news-'+n.id, el.querySelector('.newsCover')));
+      return el;
+    }
+
+    function handleImageSelect(e, id, imgEl){
+      const f = e.target.files && e.target.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = ()=>{ imgEl.src = r.result; saveCover(id, r.result); };
+      r.readAsDataURL(f);
+    }
+
+    function saveCover(id, data){ try{ localStorage.setItem('cover:'+id, data); }catch{} }
+    function loadCover(id){ try{ return localStorage.getItem('cover:'+id); }catch{ return null; } }
+    function resetAllCovers(){
+      Object.keys(localStorage).forEach(k=>{ if(k.startsWith('cover:')) localStorage.removeItem(k); });
+      location.reload();
+    }
+
+    // ====== RENDER ======
+    const grid = $('#grid');
+    categories.forEach(c=> grid.appendChild(makeCard(c)));
+    const newsGrid = $('#newsGrid');
+    news.forEach(n=> newsGrid.appendChild(makeNews(n)));
+
+    // ====== EDIT MODE ======
+    const editToggle = $('#editToggle');
+    const addNewsBtn = $('#addNews');
+    editToggle.addEventListener('change', ()=>{
+      document.querySelectorAll('article').forEach(a=> a.classList.toggle('editing', editToggle.checked));
+      addNewsBtn.classList.toggle('hidden', !editToggle.checked);
+    });
+
+    // Add news dynamically
+    addNewsBtn.addEventListener('click', ()=>{
+      const id = 'n'+(Math.random().toString(36).slice(2,7));
+      const item = { id, title:'หัวข้อข่าวใหม่', body:'พิมพ์รายละเอียดสั้น ๆ ของข่าว...', cover:'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop', meta:'เพิ่มโดยผู้ใช้' };
+      newsGrid.prepend(makeNews(item));
+    });
+
+    // ====== SEARCH ======
+    const search = $('#search');
+    const btnClear = $('#btnClearSearch');
+    function applySearch(){
+      const q = search.value.trim().toLowerCase();
+      grid.querySelectorAll('article').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+    search.addEventListener('input', applySearch);
+    btnClear.addEventListener('click', ()=>{ search.value=''; applySearch(); });
+
+    // ====== RESET COVERS ======
+    $('#resetCovers').addEventListener('click', resetAllCovers);
+  </script>
+</body>
+</html>
